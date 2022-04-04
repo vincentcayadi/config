@@ -3,55 +3,56 @@ import os
 import re
 import socket
 import subprocess
-from libqtile import layout, bar, widget, hook, qtile
+from libqtile import qtile
 from libqtile.config import Click, Drag, Group, KeyChord, Key, Match, Screen
 from libqtile.command import lazy
+from libqtile import layout, bar, widget, hook
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from typing import List  # noqa: F401from typing import List  # noqa: F401
 
-mod = "mod4"              # Sets mod key to SUPER/WINDOWS
-myTerm = "kitty"      # My terminal of choice
-myBrowser = "librewolf" # My terminal of choice
+mod = "mod4"       
+myTerm = "kitty"
+myBrowser = "brave"
 
 keys = [
-        ### The essentials
-        Key([mod], "Return",
-            lazy.spawn(myTerm+" -e zsh"),
-            desc='Launches My Terminal'
-        ),
-        Key([mod], "b",
-            lazy.spawn(myBrowser),
-            desc='Firefox'
-        ),
-        Key([mod, "shift"], "Return",
-             lazy.spawn("rofi -show run 'Run: '"),
+         ### The essentials
+         Key([mod], "Return",
+             lazy.spawn(myTerm),
+             desc='Launches My Terminal'
+             ),
+         Key([mod, "shift"], "Return",
+             lazy.spawn("rofi -show run"),
              desc='Run Launcher'
-        ),
-        Key([mod], "Tab",
+             ),
+         Key([mod], "b",
+             lazy.spawn(myBrowser),
+             desc='Brave'
+             ),
+         Key([mod], "Tab",
              lazy.next_layout(),
              desc='Toggle through layouts'
-        ),
-        Key([mod], "w",
+             ),
+         Key([mod, "shift"], "q",
              lazy.window.kill(),
              desc='Kill active window'
-        ),
-        Key([mod, "shift"], "r",
+             ),
+         Key([mod, "shift"], "r",
              lazy.restart(),
              desc='Restart Qtile'
-        ),
-        Key([mod, "shift"], "q",
-             lazy.shutdown(),
-             desc='Log out'
-        ),
+             ),
          ### Switch focus to specific monitor (out of three)
-         Key([mod], "r",
+         Key([mod], "w",
              lazy.to_screen(0),
              desc='Keyboard focus to monitor 1'
              ),
          Key([mod], "e",
              lazy.to_screen(1),
              desc='Keyboard focus to monitor 2'
+             ),
+         Key([mod], "r",
+             lazy.to_screen(2),
+             desc='Keyboard focus to monitor 3'
              ),
          ### Switch focus of monitors
          Key([mod], "period",
@@ -90,12 +91,12 @@ keys = [
              lazy.layout.section_up(),
              desc='Move windows up in current stack'
              ),
-         Key([mod], "l",
+         Key([mod], "h",
              lazy.layout.shrink(),
              lazy.layout.decrease_nmaster(),
              desc='Shrink window (MonadTall), decrease number in master pane (Tile)'
              ),
-         Key([mod], "h",
+         Key([mod], "l",
              lazy.layout.grow(),
              lazy.layout.increase_nmaster(),
              desc='Expand window (MonadTall), increase number in master pane (Tile)'
@@ -135,6 +136,7 @@ keys = [
 groups = [Group("DEV", layout='monadtall'),
           Group("WWW", layout='monadtall'),
           Group("SYS", layout='monadtall'),
+          Group("SYS", layout='monadtall'),
           Group("DOC", layout='monadtall'),
           Group("VBOX", layout='monadtall'),
           Group("CHAT", layout='monadtall'),
@@ -148,10 +150,10 @@ groups = [Group("DEV", layout='monadtall'),
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
 
-layout_theme = {"border_width": 3,
-                "margin": 14,
-                "border_focus": "8be9fd",
-                "border_normal": "44475a"
+layout_theme = {"border_width": 2,
+                "margin": 8,
+                "border_focus": "BF616A",
+                "border_normal": "1D2330"
                 }
 
 layouts = [
@@ -191,23 +193,23 @@ layouts = [
     layout.Floating(**layout_theme)
 ]
 
-colors = [["#282c34", "#282c34"],
-          ["#1c1f24", "#1c1f24"],
-          ["#dfdfdf", "#dfdfdf"],
-          ["#ff6c6b", "#ff6c6b"],
-          ["#98be65", "#98be65"],
-          ["#da8548", "#da8548"],
-          ["#51afef", "#51afef"],
-          ["#c678dd", "#c678dd"],
-          ["#46d9ff", "#46d9ff"],
-          ["#a9a1e1", "#a9a1e1"]]
+colors = [["#282c34", "#282c34"], #
+          ["#1c1f24", "#1c1f24"], #
+          ["#88C0D0", "#88C0D0"], # Lighter Blue
+          ["#81A1C1", "#81A1C1"], # Light Blue
+          ["#5E81AC", "#5E81AC"], # Dark Blue
+          ["#EBCB8B", "#EBCB8B"], # Beage
+          ["#D08770", "#D08770"], # Orange
+          ["#A3BE8C", "#A3BE8C"], # Green
+          ["#BF616A", "#BF616A"], # Red
+          ["#B48EAD", "#B48EAD"]] # Purple
 
 prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
 
 ##### DEFAULT WIDGET SETTINGS #####
 widget_defaults = dict(
-    font="Jetbrians Mono",
-    fontsize = 11,
+    font="Fira Code Medium",
+    fontsize = 12,
     padding = 2,
     background=colors[2]
 )
@@ -228,7 +230,7 @@ def init_widgets_list():
                        background = colors[0]
                        ),
               widget.GroupBox(
-                       font = "Jetbrains Mono",
+                       font = "Ubuntu Bold",
                        fontsize = 9,
                        margin_y = 3,
                        margin_x = 0,
@@ -236,7 +238,7 @@ def init_widgets_list():
                        padding_x = 3,
                        borderwidth = 3,
                        active = colors[2],
-                       inactive = colors[7],
+                       inactive = colors[4],
                        rounded = False,
                        highlight_color = colors[1],
                        highlight_method = "line",
@@ -249,7 +251,7 @@ def init_widgets_list():
                        ),
              widget.TextBox(
                        text = '|',
-                       font = "Jetbrains Mono",
+                       font = "Ubuntu Mono",
                        background = colors[0],
                        foreground = '474747',
                        padding = 2,
@@ -269,7 +271,7 @@ def init_widgets_list():
                        ),
              widget.TextBox(
                        text = '|',
-                       font = "Jetbrains Mono",
+                       font = "Ubuntu Mono",
                        background = colors[0],
                        foreground = '474747',
                        padding = 2,
@@ -296,50 +298,23 @@ def init_widgets_list():
                        foreground = colors[1],
                        background = colors[3],
                        padding = 5
-                       ),
-              widget.Sep(
-                       linewidth = 0,
-                       padding = 6,
-                       foreground = colors[0],
-                       background = colors[0]
-                       ),                       
-              widget.Wlan(
-                       foreground = colors[1],
-                       background = colors[8],
-                       interface = "wlp0s20f3",
-                       update_interval = 1,
-                       fmt = 'WIFI: {}',
-                       padding = 5,
-              ),
-              widget.Sep(
-                       linewidth = 0,
-                       padding = 6,
-                       foreground = colors[0],
-                       background = colors[0]
-                       ),
+                    ),                    
              widget.Battery(
                        foreground = colors[1],
                        background = colors[6],
                        charge_char = '🗲',
-                       discharge_char = '',
+                       discharge_char = '🔋',
                        theme_path ='/home/docs/checkouts/readthedocs.org/user_builds/qtile/checkouts/latest/libqtile/resources/battery-icons',
                        update_interval = 10,
-                       format = 'Percentage:' + '{char} {percent:2.0%} '+ 'Time Remaining: ' +'{hour:d}:{min:02d}',
+                       format = '{char} : {percent:2.0%}'+ ' | ' +'Time Left: ' +'{hour:d}:{min:02d}',
                        notify_below = 20,
                        padding = 5
-                       ),
-              widget.Sep(
-                       linewidth = 0,
-                       padding = 6,
-                       foreground = colors[0],
-                       background = colors[0]
-                       ),            
+                       ), 
               widget.Clock(
-                       foreground = colors[1],
-                       background = colors[9],
-                       format = "%A, %B %d - %H:%M ",
-                       padding = 5,
-                       ),
+                        foreground = colors[1],
+                        background = colors[9],
+                        format = "%A, %B %d - %H:%M "
+                    ),
               ]
     return widgets_list
 
@@ -435,3 +410,4 @@ def start_once():
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+2
