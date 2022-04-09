@@ -107,7 +107,7 @@ keys = [
              ),
          Key([mod], "m",
              lazy.layout.maximize(),
-             desc='toggle window between minimum and maximum sizes'
+             desc='toggle window between minimub and maximum sizes'
              ),
          Key([mod, "shift"], "f",
              lazy.window.toggle_floating(),
@@ -410,4 +410,3 @@ def start_once():
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
-2
