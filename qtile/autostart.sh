@@ -1,6 +1,8 @@
 #!/usr/bin/env bash 
+#!/usr/bin/env bash 
 volumeicon &
-nm-applet &
 nitrogen --restore &
 picom &
 fcitx &
+polybar &
+
