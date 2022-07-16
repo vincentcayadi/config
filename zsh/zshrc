@@ -1,0 +1,36 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/vincent/.zshrc'
+
+autoload -Uz compinit && compinit 
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+compinit
+# End of lines added by compinstall
+eval "$(starship init zsh)"
+
+
+# ZSH Plugins
+source ~/config/zsh/scripts/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/config/zsh/scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/config/zsh/scripts/zsh-completions/zsh-completions.zsh
+
+#ALIAS
+# sudo pacman -S exa
+alias ls="exa"
+alias ll="exa -alh"
+alias tree="exa --tree"
+
+# sudo pacman -S bat
+alias cat="bat"
+
+#Keybindings
+bindkey "^[[H"   beginning-of-line
+bindkey "^[[F"   end-of-line
+bindkey "^[[3~"  delete-char
+
+# Word Deletion
+bindkey "^[[3;5~" delete-word
