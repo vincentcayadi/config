@@ -23,8 +23,7 @@ paru -S apple-fonts nerd-fonts-fira-code nerd-fonts-jetbrains-mono ttf-apple-emo
 
 # Install zsh
 sudo pacman -S zsh
-shell_path = which zsh
-chsh -s shell_path
+chsh -s /usr/bin/zsh
 
 # Install zsh plugins
 mkdir ~/config/zsh/scripts
